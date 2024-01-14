@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
+import { LoadingIndicationService } from './services/loading-indication.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    standalone: false
 })
 export class AppComponent {
-  title = 'test-table';
+  constructor(
+    public readonly loadingIndicationService: LoadingIndicationService
+  ) {}
 }
