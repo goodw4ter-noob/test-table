@@ -1,0 +1,66 @@
+<div class="table-wrapper card">
+  <div class="controls">
+    <span
+      (click)="opendColumnsSettingsDrawer()"
+      nz-icon
+      nzType="setting"
+      nzTheme="outline"
+      class="icon"
+    ></span>
+  </div>
+
+  <nz-table
+    class="table"
+    [nzOuterBordered]="true"
+    [nzData]="dataService.dataSource | async"
+    [nzTotal]="(dataService.total | async) ?? 0"
+    [nzFrontPagination]="false"
+    nzPaginationType="default"
+    nzPaginationPosition="bottom"
+    [nzShowSizeChanger]="true"
+    [nzShowPagination]="true"
+    [nzScroll]="{ y: '410px' }"
+    (nzPageIndexChange)="currentPage = $event"
+    [(nzPageSize)]="pageSize"
+    [nzSize]="size"
+  >
+    <thead>
+      <tr class="table__row">
+        <th
+          class="table__column"
+          [nzChecked]="false"
+          [nzIndeterminate]="false"
+          (nzCheckedChange)="onAllChecked($event)"
+          nzWidth="30px"
+        ></th>
+        <ng-container *ngFor="let column of columnProvider.columns">
+          <th
+            *ngIf="column.isVisible"
+            class="table__column"
+            nzWidth="80px"
+          >{{ column.columnName }}</th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let data of dataService.dataSource | async"
+        class="table__row"
+      >
+        <td
+          [nzChecked]="setOfCheckedId.has(data.id)"
+          [nzDisabled]="data.disabled"
+          (nzCheckedChange)="onItemChecked(data.id, $event)"
+          class="table__column"
+        ></td>
+        <td
+          *ngFor="let column of columnProvider.columns"
+          class="table__column"
+          [style]="{ 'font-size': (fontSize | async) }"
+        >
+          {{ column.cell(data) }}
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

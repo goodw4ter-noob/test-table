@@ -1,0 +1,18 @@
+[nz-radio] {
+  display: block;
+  height: 32px;
+  line-height: 32px;
+}
+
+.form {
+  &__item {
+    position: relative;
+    width: 100%;
+    margin-bottom: 10px;
+
+    &__control {
+      position: absolute;
+      right: 0;
+    }
+  }
+}
